@@ -1,0 +1,211 @@
+{
+	"plugin_id": "doorbirdx",
+	"name_fr": "DoorbirdX",
+	"icon": "doorbirdx.png",
+	"version": "1.0",
+	"creation_date": "2018-03-20",
+	"modification_date": "2018-03-21",
+	"author": "Influman",
+	"description_fr": "Autre gestion du portier connecté <a href='http://www.doorbird.com' target='_blank'>Doorbird</a><br>Plugin adapté à l'utilisation du Doorbird D2101V avec firmware 000110 ou supérieur (nouvelle API)",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "https://forum.eedomus.com/viewtopic.php?f=17&t=6870",
+	"parameters": 
+	[
+		{
+			"parameter": "NAME", 
+			"description": "Appareil",
+			"xtype": "textfield",
+			"default_value": "Portier",
+			"field": "width:130, allowBlank:false"
+		},
+		{
+			"parameter": "IP", 
+			"description": "IP locale du Doorbird",
+			"xtype": "textfield",
+			"default_value": "192.168.0.",
+			"field": "width:130, allowBlank:false, maskRe:/[0-9.:]/, regex:/^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$/, regexText:'Adresse IP invalide [0-255].[0-255].[0-255].[0-255]'"
+		},
+		{
+			"parameter": "LOGIN", 
+			"description": "Identifiant",
+			"xtype": "textfield",
+			"default_value": ".....0001",
+			"field": "width:130, allowBlank:false"
+		},
+		{
+			"parameter": "PWD", 
+			"description": "Mot de passe",
+			"xtype": "textfield",
+			"default_value": "",
+			"field": "width:130, allowBlank:false"
+		},
+		{
+			"parameter": "line1",
+			"description": "Paramètres FTP (Camera eedomus)",
+			"xtype": "displayfield",
+			"field": "style: 'padding: 3px;', value: '......................................'"
+		},	
+		{
+            "parameter": "FTPSERV", 
+            "description": "Server : ",
+            "xtype": "textfield",
+			"default_value": "camera.eedomus.com",
+			"field": "width:150, allowBlank:true"
+		},
+		{
+            "parameter": "FTPUSR", 
+            "description": "User : ",
+            "xtype": "textfield",
+			"default_value": "",
+			"field": "width:150, allowBlank:true"
+		},
+		{
+            "parameter": "FTPPWD", 
+            "description": "Password : ",
+            "xtype": "textfield",
+			"default_value": "",
+			"field": "width:150, allowBlank:true"
+		},
+		{
+			"parameter": "line2",
+			"description": "Vos paramètres API eedomus",
+			"xtype": "displayfield",
+			"field": "style: 'padding: 3px;', value: '......................................'"
+		},	
+		{
+            "parameter": "APIU", 
+            "description": "Code API User : ",
+            "xtype": "textfield",
+			"default_value": "NNNNNN",
+			"field": "width:150, allowBlank:false"
+		},
+		{
+            "parameter": "APIS", 
+            "description": "Code API Secret : ",
+            "xtype": "textfield",
+			"default_value": "",
+			"field": "width:150, allowBlank:false"
+		}
+	 ],
+	"scripts":
+	[
+		{
+			"name": "doorbirdx.php"
+		}
+	],
+	"devices":
+  [
+		{
+			"device_id": "status",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME (Doorbird) - Statut",
+			"icon": "doorbirdx_status.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.LOGIN",
+				"VAR3": "plugin.parameters.PWD",
+				"value_type": "string",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=doorbirdx.php&action=status&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]",
+				"RAW_XPATH": "/DOORBIRDX/STATUS",
+				"POLLING": "30"
+			}
+		},
+  		{
+			"device_id": "commande",
+			"parent_id": "status",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME (Doorbird) - Commandes",
+			"icon": "doorbirdx_command.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.LOGIN",
+				"VAR3": "plugin.parameters.PWD",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "30"
+			},
+			"values":
+			[
+				{ "value": "0", "description": "SnapshotFTP", "icon": "doorbirdx_snap.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=snapftp&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&ftpserv=plugin.parameters.FTPSERV&ftpusr=plugin.parameters.FTPUSR&ftppwd=plugin.parameters.FTPPWD" },
+				{ "value": "1", "description": "LightOn", "icon": "doorbirdx_light.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=lighton&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "2", "description": "OpenDoor #1", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=1" },
+				{ "value": "3", "description": "OpenDoor #2", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=2" },
+				{ "value": "4", "description": "OpenDoor #3", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=3" },
+				{ "value": "5", "description": "OpenDoor #4", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=4" },
+				{ "value": "6", "description": "OpenDoor #5", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=5" }
+			]	
+		},
+		{
+			"device_id": "events",
+			"parent_id": "status",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME (Doorbird) - Events",
+			"icon": "doorbirdx_events.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.LOGIN",
+				"VAR3": "plugin.parameters.PWD",
+				"value_type": "list",
+				"ignore_errors": 1,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "30"
+			},
+			"values":
+			[
+				{ "value": "0", "description": "Initialize", "icon": "doorbirdx_command.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=initialize&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&apiu=plugin.parameters.APIU&apis=plugin.parameters.APIS" },
+				{ "value": "1", "description": "Doorbell", "hidden":1, "icon": "doorbirdx_bell.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventdoorbell&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "2", "description": "Motion", "hidden":1, "icon": "doorbirdx_motion.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventmotion&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "11", "description": "Relay 1", "hidden":1, "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrelay1&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "12", "description": "Relay 2", "hidden":1, "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrelay2&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "13", "description": "ExtRelay 3", "hidden":1, "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrelay3&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "14", "description": "ExtRelay 4", "hidden":1, "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrelay4&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "15", "description": "ExtRelay 5", "hidden":1, "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrelay5&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "21", "description": "RFID 1 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid1.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid1&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "22", "description": "RFID 2 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid2.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid2&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "23", "description": "RFID 3 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid3.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid3&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "24", "description": "RFID 4 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid4.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid4&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "25", "description": "RFID 5 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid5.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid5&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "26", "description": "RFID 6 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid6.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid6&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "27", "description": "RFID 7 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid7.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid7&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "28", "description": "RFID 8 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid8.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid8&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "29", "description": "RFID 9 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid9.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid9&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" }
+			]	
+		},
+		{
+			"device_id": "analytics",
+			"parent_id": "status",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.parameters.NAME (Doorbird) - Analytics",
+			"icon": "doorbirdx_status.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.IP",
+				"VAR2": "plugin.parameters.LOGIN",
+				"VAR3": "plugin.parameters.PWD",
+				"value_type": "string",
+				"ignore_errors": 1,
+				"RAW_URL": "http://localhost/script/?exec=doorbirdx.php&action=analytics&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]",
+				"RAW_XPATH": "/DOORBIRDX/ANALYTICS/SUMMARY",
+				"POLLING": "30"
+			}
+		}
+	]
+}
