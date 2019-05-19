@@ -1,23 +1,23 @@
 <?php
 	$xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>";      
    //*********************************************************************
-   // V1.0 : DoorbirdX - Influman
+   // V1.2 : DoorbirdX - Influman 2018 - 2019
    // ********************************************************************	
 	// recuperation des infos depuis la requete
-    $action = getArg("action", $mandatory = true, $default = 'status');
-	$ip = getArg("ip", $mandatory = true);
-	$login = getArg("login", $mandatory = true);
-	$pwd = getArg("pwd", $mandatory = true);
-	$value = getArg("value", $mandatory = false);
-	$event = getArg("event", $mandatory = false);
-	$debug = getArg("debug", $mandatory = false);
+    $action = getArg("action", true, 'status');
+	$ip = getArg("ip", true);
+	$login = getArg("login", true);
+	$pwd = getArg("pwd", true);
+	$value = getArg("value", false);
+	$event = getArg("event", false);
+	$debug = getArg("debug", false);
 	// API eedomus
-	$api_user = getArg("apiu", $mandatory = false, $default = '');
-	$api_secret = getArg("apis", $mandatory = false, $default = '');
+	$api_user = getArg("apiu", false, '');
+	$api_secret = getArg("apis", false, '');
 	// FTP
-	$ftp_server = getArg('ftpserv', $mandatory = false, $default = '');
-	$ftp_user = getArg('ftpusr', $mandatory = false, $default = '');
-	$ftp_pass = getArg('ftppwd', $mandatory = false, $default = '');
+	$ftp_server = getArg('ftpserv', false, '');
+	$ftp_user = getArg('ftpusr', false, '');
+	$ftp_pass = getArg('ftppwd', false, '');
 	// API DU PERIPHERIQUE APPELANT LE SCRIPT
     $periph_id = getArg('eedomus_controller_module_id'); 
 	
@@ -50,7 +50,7 @@ if ($action == "status") {
 		$xml .= $device." (fw.".$firmware.") ".$nbrelays." relays";
 	} else {
 		if (loadVariable($login."_NBREL") != '') {
-			$xml .= "Doorbird Connection was loss : ".$returncode;
+			$xml .= "Doorbird Connection was lost : ".$returncode;
 		} else {
 			$xml .= "Doorbird Connection Error : ".$returncode;
 		}
@@ -156,6 +156,13 @@ if ($action == "status") {
     $return = httpQuery($url, 'GET', /*$post*/ NULL, /*$oauth_token*/ NULL, $headers);
 	$nbeelight++;
 	saveVariable($login."_ANAEELIGHT_USE", $nbeelight);
+	die();
+// ********************************************************************
+// RESTART : Reboot
+// ********************************************************************
+} else if ($action == "restart") {
+	$url = 'http://'.$ip.'/bha-api/restart.cgi';
+    $return = httpQuery($url, 'GET', /*$post*/ NULL, /*$oauth_token*/ NULL, $headers);
 	die();
 // ********************************************************************
 // SNAPFTP : Enregistrement d'une image sur le ftp

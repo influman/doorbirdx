@@ -2,11 +2,11 @@
 	"plugin_id": "doorbirdx",
 	"name_fr": "DoorbirdX",
 	"icon": "doorbirdx.png",
-	"version": "1.0",
+	"version": "1.2",
 	"creation_date": "2018-03-20",
-	"modification_date": "2018-03-21",
+	"modification_date": "2019-04-07",
 	"author": "Influman",
-	"description_fr": "Autre gestion du portier connecté <a href='http://www.doorbird.com' target='_blank'>Doorbird</a><br>Plugin adapté à l'utilisation du Doorbird D2101V avec firmware 000110 ou supérieur (nouvelle API)",
+	"description_fr": "Autre gestion du portier connecté <a href='http://www.doorbird.com' target='_blank'>Doorbird</a><br>Plugin adapté à l'utilisation du Doorbird D21xxx avec firmware 000110 ou supérieur",
 	"description_en": "",
 	"description_es": "",
 	"description_it": "",
@@ -144,7 +144,8 @@
 				{ "value": "3", "description": "OpenDoor #2", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=2" },
 				{ "value": "4", "description": "OpenDoor #3", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=3" },
 				{ "value": "5", "description": "OpenDoor #4", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=4" },
-				{ "value": "6", "description": "OpenDoor #5", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=5" }
+				{ "value": "6", "description": "OpenDoor #5", "icon": "doorbirdx_relay.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=opendoor&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]&value=5" },
+				{ "value": "99", "description": "Restart", "icon": "doorbirdx_restart.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=restart&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" }
 			]	
 		},
 		{
@@ -184,7 +185,11 @@
 				{ "value": "26", "description": "RFID 6 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid6.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid6&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
 				{ "value": "27", "description": "RFID 7 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid7.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid7&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
 				{ "value": "28", "description": "RFID 8 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid8.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid8&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
-				{ "value": "29", "description": "RFID 9 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid9.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid9&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" }
+				{ "value": "29", "description": "RFID 9 (transponder_id) PRENOM", "hidden":1, "icon": "doorbirdx_rfid9.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventrfid9&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "30", "description": "Code 1 PRENOM", "hidden":1, "icon": "doorbirdx_code.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventcode1&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "31", "description": "Code 2 PRENOM", "hidden":1, "icon": "doorbirdx_code.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventcode2&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "32", "description": "Code 3 PRENOM", "hidden":1, "icon": "doorbirdx_code.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventcode3&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" },
+				{ "value": "33", "description": "Code 4 PRENOM", "hidden":1, "icon": "doorbirdx_code.png", "http_url": "http://localhost/script/?exec=doorbirdx.php", "http_type": "GET",  "http_params": "&action=eventcode4&ip=[VAR1]&login=[VAR2]&pwd=[VAR3]" }
 			]	
 		},
 		{

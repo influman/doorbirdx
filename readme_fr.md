@@ -10,7 +10,7 @@ Ce plugin est principalement dédié à l'utilisation du Doorbird D2101V avec firmw
 *Ce plugin installe:*
   
 * Un état STATUT qui donne l'état de la connexion au Doorbird, et fournira le type d'appareil, la référence du firmware le cas échéant, le nombre de relais utilisables.  
-* Un actionneur COMMANDES qui vous permet, depuis eedomus, de réaliser des actions sur le portier : Allumer la lumière, enregistrer un snapshot sur le FTP, ouvrir un relais
+* Un actionneur COMMANDES qui vous permet, depuis eedomus, de réaliser des actions sur le portier : Allumer la lumière, enregistrer un snapshot sur le FTP, ouvrir un relais, rebooter
 * Un état EVENTS qui est positionné par le Doorbird lui-même en fonction d'évènements (Sonnette, Mouvement, Relais, RFID) réutilisables dans vos règles.  
 * Un état ANALYTICS qui fournit les statistiques d'utilisation  
   
